@@ -1,0 +1,7 @@
+{
+  "name": "cli",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
