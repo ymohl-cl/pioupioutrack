@@ -1,11 +1,12 @@
 import { InjectionKey } from 'vue';
-
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import { findSpotById, Spot } from '@/store/spot'
 import { Flight, mostPopularSpotId } from '@/store/flight';
 import { landings, takeOffs, flights } from '@/store/data';
+import { User } from './user';
 
 export interface State {
+	user: User;
 	flights: Array<Flight>;
 	takeOffs: Array<Spot>;
 	landings: Array<Spot>;
@@ -20,6 +21,7 @@ export function useStore(): Store<State> {
 
 export const store = createStore<State>({
 	state: {
+		user: new User("", "","", ""),
 		flights: flights(),
 		takeOffs: takeOffs,
 		landings: landings,
@@ -28,9 +30,15 @@ export const store = createStore<State>({
 		addFlight(state: State, newFlight: Flight) {
 			newFlight.id = (state.flights.length + 1).toString()
 			state.flights.push(newFlight)
+		},
+		setUser(state: State, newUser: User) {
+			state.user = newUser
 		}
 	},
 	getters: {
+		user(state: State): User {
+			return state.user;
+		},
 		flights(state: State): Array<Flight> {
 			return state.flights;
 		},

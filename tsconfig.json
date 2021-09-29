@@ -33,7 +33,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/globalVar/global.vuex"  ],
   "exclude": [
     "node_modules"
   ]
