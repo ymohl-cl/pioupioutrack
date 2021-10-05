@@ -17,7 +17,10 @@
     "@capacitor/status-bar": "1.0.2",
     "@ionic/vue": "^5.4.0",
     "@ionic/vue-router": "^5.4.0",
+    "axios": "^0.22.0",
     "core-js": "^3.6.5",
+    "firebase": "^9.1.0",
+    "qs": "^6.10.1",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.2"
@@ -44,5 +47,18 @@
   },
   "description": "An Ionic project",
   "main": "src/index",
-  "typings": "src/index"
+  "typings": "src/index",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ymohl-cl/pioupioutrack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ymohl-cl/pioupioutrack/issues"
+  },
+  "homepage": "https://github.com/ymohl-cl/pioupioutrack#readme"
 }

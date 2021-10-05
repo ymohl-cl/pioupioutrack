@@ -24,11 +24,11 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(IonicVue)
-app.use(router)
-app.use(store, key)
+app.use(IonicVue);
+app.use(router);
+app.use(store, key);
 
 router.isReady().then(() => {
   app.mount('#app');
