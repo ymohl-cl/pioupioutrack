@@ -51,10 +51,6 @@ export default defineComponent({
                 this.message = "Password error!";
                 return;
             }
-            // else if (isExist(this.email)) {
-            //     this.message = "This mail already exist!";
-            //     return;
-            // }
             else {
                 this.$store.commit("setUser", new User(this.name, this.surname, this.email, this.fstPassword));
                 this.$router.push('/flight');

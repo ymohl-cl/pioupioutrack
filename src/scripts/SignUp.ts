@@ -6,12 +6,3 @@ export function isSimilare(fstPwd: string, scdPwd: string): boolean {
     }
     return true;
 }
-
-// export function isExist(email: string): boolean {
-//     for(let i = 0; i < user.length; i++) {
-//         if (email === user[i].email) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }

@@ -10,8 +10,3 @@
     <ion-menu-button menu="menuAppId"></ion-menu-button>
   </ion-button>
 ```
-
-
-## Christopher notes
-
--  ionic serve
