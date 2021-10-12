@@ -16,9 +16,10 @@ import {
 	IonFabButton,
 	IonIcon,
 } from '@ionic/vue';
-import { add } from 'ionicons/icons';
+import { add, navigate } from 'ionicons/icons';
 import Header from '@/components/Header.vue';
 import ModalAddFlight from '@/components/ModalAddFlight.vue';
+import ModalServices from '@/components/ModalServices.vue'
 import Modal from '@/scripts/Modal'
 
 export default defineComponent({
@@ -44,10 +45,13 @@ export default defineComponent({
 	methods: {
 		addFlight() {
 			this.modal.open(ModalAddFlight)
+		},
+		position() {
+			this.modal.open(ModalServices);
 		}
 	},
 	setup() {
 		const modal = new Modal();
-		return { add, modal }
+		return { add, navigate, modal }
 	}
 })

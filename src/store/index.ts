@@ -4,8 +4,10 @@ import { findSpotById, Spot } from '@/store/spot'
 import { Flight, mostPopularSpotId } from '@/store/flight';
 import { landings, takeOffs, flights } from '@/store/data';
 import { User } from './user';
+import { DeviceInformations } from '@/scripts/Device';
 
 export interface State {
+	device: DeviceInformations;
 	user: User;
 	flights: Array<Flight>;
 	takeOffs: Array<Spot>;
@@ -21,6 +23,7 @@ export function useStore(): Store<State> {
 
 export const store = createStore<State>({
 	state: {
+		device: new DeviceInformations("", "", "", "", 0, 0, 0),
 		user: new User("", "","", ""),
 		flights: flights(),
 		takeOffs: takeOffs,
@@ -33,9 +36,15 @@ export const store = createStore<State>({
 		},
 		setUser(state: State, newUser: User) {
 			state.user = newUser
+		},
+		setDevice(state: State, newDevice: DeviceInformations) {
+			state.device = newDevice
 		}
 	},
 	getters: {
+		device(state: State): DeviceInformations {
+			return state.device;
+		},
 		user(state: State): User {
 			return state.user;
 		},

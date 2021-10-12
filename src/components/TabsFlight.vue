@@ -1,6 +1,6 @@
 <template>
 	<ion-page>
-		<Header title="Flight" />
+		<Header title="Flight"/>
 		<ion-content>
 			<ion-tabs>
 				<ion-tab-bar slot="top">
@@ -12,6 +12,11 @@
 					</ion-tab-button>
 				</ion-tab-bar>
 			</ion-tabs>
+			<ion-fab vertical="bottom" horizontal="start" slot="fixed">
+				<ion-fab-button @click="position" color="secondary">
+					<ion-icon :icon="navigate"></ion-icon>
+				</ion-fab-button>
+			</ion-fab>
 			<ion-fab vertical="bottom" horizontal="end" slot="fixed">
 				<ion-fab-button @click="addFlight" color="secondary">
 					<ion-icon :icon="add" />
