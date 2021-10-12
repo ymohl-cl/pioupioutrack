@@ -21,7 +21,7 @@ import Modal from '@/scripts/Modal';
 import { useStore } from '@/store';
 import { Spot } from '@/store/spot'
 import { Flight } from '@/store/flight';
-import { setDevice, setFlight, getDevice, getFlight } from '@/scripts/Storage';
+//import { setDevice, setFlight, getDevice, getFlight } from '@/scripts/Storage';
 
 export default defineComponent({
 	name: "ModalAddFlight",
@@ -58,7 +58,7 @@ export default defineComponent({
 		},
 		valid() {
 			this.$store.commit("addFlight", this.flight)
-			setFlight(this.flight, parseInt(this.flight.id));
+//			setFlight(this.flight, parseInt(this.flight.id));
 			this.close()
 		}
 	},
@@ -69,7 +69,7 @@ export default defineComponent({
 		flight.takeOffId = takeOffSpot.suid
 		flight.landingId = landingSpot.suid
 		console.log('ok')
-		console.log(getFlight())
+//		console.log(getFlight())
 
 		return {
 			takeOffSpot,

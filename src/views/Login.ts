@@ -13,7 +13,7 @@ import {
 import { useStore } from '@/store';
 import { connection } from '@/scripts/Connection';
 import { User } from '@/store/user';
-import { DeviceInformations, device } from '@/scripts/Device';
+import SDevicec, { DDevice } from '@/scripts/SDevice';
 export default defineComponent({
     name: 'Login',
     components: {
@@ -27,12 +27,10 @@ export default defineComponent({
         const email = ""
         const password = ""
         const message = "Please log in"
-        const deviceInfo = device();
         return {
             email,
             password,
             message,
-            deviceInfo,
         }
     },
     setup() {
@@ -44,13 +42,17 @@ export default defineComponent({
     },
     methods: {
         checkUser(): void {
+            this.$store.commit("init");
+            const d: DDevice = this.$store.getters.device
+            console.log(d)
+
             if (this.email === "" || this.password === "" ){
                 this.message = "Please enter your informations to login!";
                 return
             }
             if (connection(this.email, this.password)) {
                 this.$store.commit("setUser", new User("chris", "bat", this.email, this.password));
-                this.$store.commit("setDevice", new DeviceInformations(this.deviceInfo.name, this.deviceInfo.model, this.deviceInfo.platform, this.deviceInfo.osVersion, this.deviceInfo.memUsed, this.deviceInfo.diskFree, this.deviceInfo.diskTotal));
+                //this.$store.commit("setDevice", new DeviceInformations(this.deviceInfo.name, this.deviceInfo.model, this.deviceInfo.platform, this.deviceInfo.osVersion, this.deviceInfo.memUsed, this.deviceInfo.diskFree, this.deviceInfo.diskTotal));
                 this.$router.push('/flight');
                 return;
             } else {

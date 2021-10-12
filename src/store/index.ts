@@ -4,14 +4,18 @@ import { findSpotById, Spot } from '@/store/spot'
 import { Flight, mostPopularSpotId } from '@/store/flight';
 import { landings, takeOffs, flights } from '@/store/data';
 import { User } from './user';
-import { DeviceInformations } from '@/scripts/Device';
+import SDevice, { DDevice } from '@/scripts/SDevice';
+import SStorage from '@/scripts/Storage';
+
+const deviceKey = "device"
 
 export interface State {
-	device: DeviceInformations;
+	device: SDevice;
 	user: User;
 	flights: Array<Flight>;
 	takeOffs: Array<Spot>;
 	landings: Array<Spot>;
+	driverStorage: SStorage;
 }
 
 // define injection key
@@ -23,13 +27,19 @@ export function useStore(): Store<State> {
 
 export const store = createStore<State>({
 	state: {
-		device: new DeviceInformations("", "", "", "", 0, 0, 0),
+		device: new SDevice(),
 		user: new User("", "","", ""),
 		flights: flights(),
 		takeOffs: takeOffs,
 		landings: landings,
+		driverStorage: new SStorage(),
 	},
 	mutations: {
+		// ** find a solution to call the following functions at the same moment of createStore operation
+		init(state: State){
+			state.driverStorage.write(deviceKey, state.device)
+		},
+		// ** end
 		addFlight(state: State, newFlight: Flight) {
 			newFlight.id = (state.flights.length + 1).toString()
 			state.flights.push(newFlight)
@@ -37,13 +47,11 @@ export const store = createStore<State>({
 		setUser(state: State, newUser: User) {
 			state.user = newUser
 		},
-		setDevice(state: State, newDevice: DeviceInformations) {
-			state.device = newDevice
-		}
 	},
 	getters: {
-		device(state: State): DeviceInformations {
-			return state.device;
+		device(state: State): DDevice {
+			const d = state.driverStorage.read(deviceKey)
+			return d;
 		},
 		user(state: State): User {
 			return state.user;
