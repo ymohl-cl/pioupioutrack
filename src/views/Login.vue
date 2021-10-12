@@ -34,12 +34,18 @@
 						<div class="row">
 							<ion-label ion-text-center>Or connect you with</ion-label>
 						</div>
+						<div>
+							<ion-text>Device name: {{ name }}</ion-text>
+							<ion-text>Battery level: {{ level }}</ion-text>
+							<ion-button v-on:click="tOu()">T ou ouech ?</ion-button>
+							<ion-text>Ici ma gueule !{{ pos.coords }}</ion-text>
+						</div>
 					</ion-col>
 					<ion-col class="ion-margin">
 						<div class="row">
 							<div class="col text-center">
-								<ion-button><ion-icon button slot="start" :icon="logoFacebook"></ion-icon>Facebook</ion-button>
-								<ion-button><ion-icon slot="start" :icon="logoGoogle"></ion-icon>Google</ion-button>
+								<ion-button v-on:click="nameDevice()"><ion-icon button slot="start" :icon="logoFacebook"></ion-icon>Facebook</ion-button>
+								<ion-button v-on:click="batteryDevice()"><ion-icon slot="start" :icon="logoGoogle"></ion-icon>Google</ion-button>
 							</div>
 						</div>
 					</ion-col>
