@@ -68,7 +68,6 @@ export default defineComponent({
 		const flight: Flight = new Flight(0)
 		flight.takeOffId = takeOffSpot.suid
 		flight.landingId = landingSpot.suid
-		console.log('ok')
 //		console.log(getFlight())
 
 		return {

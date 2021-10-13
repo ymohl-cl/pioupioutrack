@@ -8,6 +8,8 @@ export interface DDevice {
     memUsed: number;
     diskFree: number;
     diskTotal: number;
+
+
 }
 
 export default class SDevice {
@@ -40,5 +42,15 @@ export default class SDevice {
     }
     async info(): Promise<DeviceInfo> {
         return await Device.getInfo();
+    }
+
+    fromJson(json: any): void {
+        this.data.name = json.name
+        this.data.model = json.model
+        this.data.platform = json.platform
+        this.data.osVersion = json.osVersion
+        this.data.memUsed = json.memUsed
+        this.data.diskFree = json.diskFree
+        this.data.diskTotal = json.diskTotal
     }
 }

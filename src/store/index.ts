@@ -6,6 +6,7 @@ import { landings, takeOffs, flights } from '@/store/data';
 import { User } from './user';
 import SDevice, { DDevice } from '@/scripts/SDevice';
 import SStorage from '@/scripts/Storage';
+import { GetResult } from'@capacitor/storage';
 
 const deviceKey = "device"
 
@@ -37,7 +38,10 @@ export const store = createStore<State>({
 	mutations: {
 		// ** find a solution to call the following functions at the same moment of createStore operation
 		init(state: State){
-			state.driverStorage.write(deviceKey, state.device)
+			state.driverStorage.write(deviceKey, state.device.data)
+			state.device.data.model = ""
+			console.log("init")
+			console.log(state.device.data.model);
 		},
 		// ** end
 		addFlight(state: State, newFlight: Flight) {
@@ -50,8 +54,31 @@ export const store = createStore<State>({
 	},
 	getters: {
 		device(state: State): DDevice {
-			const d = state.driverStorage.read(deviceKey)
-			return d;
+			state.driverStorage.read(deviceKey).then((json: Promise<any>) => {
+				if (json != undefined) {
+					console.log("defined")
+					state.device.fromJson(json)
+					console.log(state.device.data.model);
+				}
+				else {
+					console.log("undefined")
+					console.log(state.device.data.model);
+				}
+			}).catch((e)=> {
+				console.log(e)
+			})
+			console.log("coucou")
+			return state.device.data;
+
+			// const value: any = state.driverStorage.read(deviceKey);
+
+			// if (value !== null) {
+			// 	const d: DDevice = value
+			// 	console.log("getter device 1 " + d.model);
+			// 	console.log("getter device 2 " + d);
+			// 	return d;
+			// }
+			// return {} as DDevice;
 		},
 		user(state: State): User {
 			return state.user;

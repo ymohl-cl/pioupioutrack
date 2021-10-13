@@ -1,31 +1,36 @@
-//import { Flight } from '@/store/flight';
 import { GetResult, Storage } from'@capacitor/storage';
-//import { DeviceInformations } from './SDevice';
+import { DDevice } from './SDevice';
 
 export default class SStorage {
     constructor() {
         // check the access storage
     }
-    async write(key: string, value: any): Promise<void> {
+    async write(key: string, value: DDevice): Promise<void> {
         return await Storage.set({
             key: key,
-            value: JSON.stringify({
-                value: value,
-            })
+            value: JSON.stringify(
+                value,
+            )
         })
     }
-    read(key: string): any {
-        let value: any;
-        this.internalRead(key).then((data: GetResult) => {
-            if (data.value !== null) {
-                value =  JSON.parse(data.value);
+    async read(key: string): Promise<any> {
+        let json: any = null;
+        await Storage.get({key: key}).then((data: GetResult) => {
+            if (data.value != null) {
+                json = JSON.parse(data.value);
+                if (json != null) {
+                    console.log("not null")
+                }
+            }
+            else {
+                console.log('null')
             }
         })
-        return value
+        if (json != null) {
+            console.log(json.model)
+        }
+        return json
     }
-    async internalRead(key: string): Promise<GetResult> {
-        return await Storage.get({key: key})
-   }
 }
 
 // get(options: { key: string; }) => Promise<{ value: string | null; }>
