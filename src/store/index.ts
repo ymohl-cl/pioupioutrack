@@ -2,16 +2,19 @@ import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import { findSpotById, Spot } from '@/store/spot'
 import { Flight, mostPopularSpotId } from '@/store/flight';
+import SGPS from '@/scripts/ServiceGPS';
+import { User } from "./user";
 import { landings, takeOffs, flights } from '@/store/data';
-import { User } from './user';
-import SDevice, { DDevice } from '@/scripts/SDevice';
+import { Driver } from '@/store/Driver';
+import SDevice from '@/scripts/ServiceDevice';
 import SStorage from '@/scripts/Storage';
-import { GetResult } from'@capacitor/storage';
 
-const deviceKey = "device"
+const deviceKey = "device";
+const gpsKey = "geolocation";
+export let ok = false;
 
 export interface State {
-	device: SDevice;
+	drivers: Driver;
 	user: User;
 	flights: Array<Flight>;
 	takeOffs: Array<Spot>;
@@ -28,20 +31,20 @@ export function useStore(): Store<State> {
 
 export const store = createStore<State>({
 	state: {
-		device: new SDevice(),
-		user: new User("", "","", ""),
+		drivers: new Driver(),
+		user: new User("", "", "", ""),
 		flights: flights(),
 		takeOffs: takeOffs,
 		landings: landings,
 		driverStorage: new SStorage(),
 	},
 	mutations: {
-		// ** find a solution to call the following functions at the same moment of createStore operation
-		init(state: State){
-			state.driverStorage.write(deviceKey, state.device.data)
-			state.device.data.model = ""
-			console.log("init")
-			console.log(state.device.data.model);
+		// ** find a solution to call the following function at the same moment of createStore operation
+		init(state: State) {
+			state.driverStorage.write(deviceKey, state.drivers.device.data);
+			state.driverStorage.write(gpsKey, state.drivers.geolocation.data);
+			ok = true;
+			console.log(ok);
 		},
 		// ** end
 		addFlight(state: State, newFlight: Flight) {
@@ -49,36 +52,19 @@ export const store = createStore<State>({
 			state.flights.push(newFlight)
 		},
 		setUser(state: State, newUser: User) {
-			state.user = newUser
+			state.user = newUser;
 		},
+		read(state: State) {
+			console.log(state.driverStorage.read(deviceKey));
+			console.log(state.driverStorage.read(gpsKey));
+		}
 	},
 	getters: {
-		device(state: State): DDevice {
-			state.driverStorage.read(deviceKey).then((json: Promise<any>) => {
-				if (json != undefined) {
-					console.log("defined")
-					state.device.fromJson(json)
-					console.log(state.device.data.model);
-				}
-				else {
-					console.log("undefined")
-					console.log(state.device.data.model);
-				}
-			}).catch((e)=> {
-				console.log(e)
-			})
-			console.log("coucou")
-			return state.device.data;
-
-			// const value: any = state.driverStorage.read(deviceKey);
-
-			// if (value !== null) {
-			// 	const d: DDevice = value
-			// 	console.log("getter device 1 " + d.model);
-			// 	console.log("getter device 2 " + d);
-			// 	return d;
-			// }
-			// return {} as DDevice;
+		device(state: State): SDevice{ 
+			return state.drivers.device;
+		},
+		geolocation(state: State): SGPS {
+			return state.drivers.geolocation;
 		},
 		user(state: State): User {
 			return state.user;
@@ -144,6 +130,27 @@ export const store = createStore<State>({
 })
 
 /*
+	device(state: State): SDevice{ 
+		return state.drivers.device;
+
+		// state.driverStorage.read(deviceKey).then((json: Promise<any>) => {
+		// 	if (json != undefined) {
+		// 		state.device.fromJson(json)
+		// 		console.log("Defined device : " + state.device.data.model);
+		// 	}
+		// })
+		// console.log("retour fonction device")
+		// return state.device.data;
+
+		// const value: any = state.driverStorage.read(deviceKey);
+		// if (value !== null) {
+		// 	const d: DDevice = value
+		// 	console.log("getter device 1 " + d.model);
+		// 	console.log("getter device 2 " + d);
+		// 	return d;
+		// }
+		// return {} as DDevice;
+	},
 	mutations: {
 		addSpot(state: State, newSpot: Spot) {
 			const s: Spot = {
