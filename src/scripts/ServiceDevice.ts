@@ -41,9 +41,6 @@ export default class SDevice {
             this.init = true;
         })
     }
-    // async info(): Promise<DeviceInfo> {
-    //     return await Device.getInfo();
-    // }
 
     fromJson(json: any): void {
         console.log("3")
