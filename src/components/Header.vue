@@ -49,6 +49,12 @@
 						<ion-button fill="clear" href="/flight">Profile</ion-button>
 					</ion-label>
 				</ion-item>
+				<ion-item button>
+					<ion-icon :icon="cameraOutline" slot="start"></ion-icon>
+					<ion-label>
+						<ion-button fill="clear" href="/picture">Gallery</ion-button>
+					</ion-label>
+				</ion-item>
 			</ion-list>
 		</ion-content>
 	</ion-menu>

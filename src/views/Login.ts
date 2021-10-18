@@ -1,10 +1,18 @@
 import { defineComponent } from 'vue';
 import {
+    IonGrid,
+    IonCol,
+    IonRow,
+    IonHeader,
+    IonLabel,
     IonContent,
     IonPage,
+    IonTitle,
     IonItem,
     IonInput,
     IonButton,
+    IonIcon,
+    IonFooter,
 } from '@ionic/vue';
 import {
     logoFacebook,
@@ -13,15 +21,23 @@ import {
 import { useStore } from '@/store';
 import { connection } from '@/scripts/Connection';
 import { User } from '@/store/user';
-
+import SDevice, { DDevice } from '@/scripts/ServiceDevice';
 export default defineComponent({
     name: 'Login',
     components: {
+        IonGrid,
+        IonCol,
+        IonRow,
+        IonHeader,
+        IonLabel,
         IonContent,
         IonPage,
+        IonTitle,
         IonItem,
         IonInput,
         IonButton,
+        IonIcon,
+        IonFooter,
     },
     data() {
         const email = ""
@@ -42,6 +58,8 @@ export default defineComponent({
     },
     methods: {
         checkUser(): void {
+            this.$store.commit("init");
+            
             if (this.email === "" || this.password === "" ){
                 this.message = "Please enter your informations to login!";
                 return
@@ -54,5 +72,5 @@ export default defineComponent({
                 this.message = "Password or username error!";
             }
         },
-    },
+    }      
 })

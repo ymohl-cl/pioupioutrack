@@ -29,6 +29,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
+		path: '/picture',
+		component: () => import('@/views/Pictures.vue'),
+		meta: {
+			public: true,
+		}
+
+	},
+	{
 		path: "/flight/",
 		component: TabsFlight,
 		redirect: '/flight/resume',

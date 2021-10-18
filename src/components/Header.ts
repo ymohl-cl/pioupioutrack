@@ -20,6 +20,7 @@ import {
 	cartOutline,
 	peopleOutline,
 	accessibilityOutline,
+	cameraOutline,
 } from 'ionicons/icons';
 
 export default defineComponent({
@@ -49,6 +50,7 @@ export default defineComponent({
 			cartOutline,
 			peopleOutline,
 			accessibilityOutline,
+			cameraOutline,
 		}
 	}
 })
